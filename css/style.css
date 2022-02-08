@@ -1,0 +1,118 @@
+*{
+    box-sizing: border-box;
+    --main-color: #fff;
+    --reserved-msg: #FFDEDE;
+    --msg: #fff;
+    --type-msg: #dcdcdc;
+
+    --height-header: 80px;
+    --height-footer: 80px;
+    --space-word: 4px;
+
+}
+
+body {
+    font-family: 'Righteous', cursive;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    
+    background-color: #e5e5e5;
+}
+
+button {
+    background: none;
+    border: none;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    height: var(--height-header);
+    padding: 0 22px;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    background-color: var(--main-color);
+    box-shadow: 0px 1px 10px 2px rgba(0, 0, 0, 0.2);
+}
+
+header figure {
+    width: 75px;
+    height: 53px;
+    background-image: url("../img/logoUol.png");
+}
+header ion-icon {
+    font-size: 42px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--height-header);
+}
+
+main article {
+    display: flex;
+    align-items: center;
+
+    height: 40px;
+    margin-bottom: 4px;
+
+    background-color: var(--msg);
+}
+
+main article:first-child {
+    margin-top: 26px;
+}
+
+article time {
+    margin-left: 8px;
+}
+
+article strong {
+    font-weight: 700;
+    margin-left: var(--space-word);
+}
+
+article p:nth-child(3){
+    margin-left: var(--space-word);
+}
+
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    height: var(--height-footer);
+
+    padding: 0 17px;
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    background-color: var(--main-color);
+    box-shadow: 0px -1px 10px 2px rgba(0, 0, 0, 0.2);
+}
+
+footer input {
+    border: none;
+    font-style: italic;
+    font-size: 18px;
+    color: #000;
+}
+
+footer input::selection {
+    border: none;
+}
+
+footer ion-icon {
+    font-size: 26px;
+}
