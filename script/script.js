@@ -1,21 +1,47 @@
 
 //loginUser(prompt('Seu nome'));
 
-function loginUser(name){
-    const obj = {name: name};
-    const promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/participants', obj);
-    promise.then(userIsApproved)
+let user = {name: ''};
+let connectedInterval = null;
+let loadMessageInterval = null;
+
+function loginUser(){
+    user.name = document.querySelector('.login input').value;
+    const promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/participants', user.name);
+    loading();
+    promise.then(verifyUser)
 }
 
-function userIsApproved(answer){
+function verifyUser(answer){
     console.log(answer.status);
     if(answer.status == 200) {
         loadMessage();
-    }
+        setTimeout(hideLogin, 100);        
+        connectedInterval = setInterval(keepConnected, 5000);
+        loadMessageInterval = setInterval(loadMessage, 3000);
+    } 
     else {
-     alert('não foi aprovado');
-     loginUser(prompt('Seu nome'));
+     loading();
     }
+}
+
+
+function keepConnected(){
+    const repositorio = 'https://mock-api.driven.com.br/api/v4/uol/status';
+    const promise = axios.post(repositorio, user.name);
+}
+
+
+function hideLogin(){
+    document.querySelector('.loginScreen').classList.add('hide');
+}
+
+function loading(){
+    const loginScreen = document.querySelector('.login');
+    const loadingScreen = document.querySelector('.loading');
+
+    loginScreen.classList.toggle('hide');
+    loadingScreen.classList.toggle('hide');
 }
 
 function loadMessage(){

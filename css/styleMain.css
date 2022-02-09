@@ -28,6 +28,7 @@ button {
     border: none;
 }
 
+/* -- Topo -- */
 header{
     display: flex;
     justify-content: space-between;
@@ -55,12 +56,14 @@ header ion-icon {
     font-size: 42px;
 }
 
+/* -- Principal -- */
 main {
     display: flex;
     flex-direction: column;
     margin-top: var(--height-header);
 }
 
+/* -- Mensagem -- */
 main article {
     display: flex;
     align-items: center;
@@ -88,6 +91,8 @@ article p:nth-child(3){
     margin-left: var(--space-word);
 }
 
+
+/* -- Rodapé -- */
 
 footer {
     display: flex;
@@ -123,6 +128,8 @@ footer ion-icon {
     font-size: 26px;
 }
 
+
+/* -- Tela login -- */
 .loginScreen {
     display: flex;
     flex-direction: column;
@@ -144,6 +151,13 @@ footer ion-icon {
     background-repeat: no-repeat;
 
     margin: calc((50vh - 57px - 92px)/2) 0;
+}
+
+
+.loginScreen .login, .loading .loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .loginScreen input {
@@ -170,10 +184,22 @@ footer ion-icon {
     color: #696969;
 }
 
+/* -- Tela de carregamento -- */
+
+.loading figure{
+    width: var(--loading-size);
+    height: var(--loading-size);
+
+    border-radius: 50%;
+    margin-bottom: 20px;
+    
+    background-image: var(--img-loading);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
 
 
 
-
-.hide {
+.hide * {
     display: none;
 }

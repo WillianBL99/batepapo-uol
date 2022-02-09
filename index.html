@@ -23,42 +23,7 @@
         <button><ion-icon name="people-sharp"></ion-icon></button>
     </header>
     <main>
-        <!-- <article>
-            <time>(09:22:28)</time>
-            <p>
-                <strong id="fromUser">João</strong>
-                <p>para</p>
-                <strong id="toUser">Todos</strong>
-                <p>: Bom dia</p>
-            </p>
-        </article>
-        <article>
-            <time>(09:22:28)</time>
-            <p>
-                <strong id="fromUser">João</strong>
-                <p>para</p>
-                <strong id="toUser">Todos</strong>
-                <p>: Bom dia</p>
-            </p>
-        </article>
-        <article>
-            <time>(09:22:28)</time>
-            <p>
-                <strong id="fromUser">João</strong>
-                <p>para</p>
-                <strong id="toUser">Todos</strong>
-                <p>: Bom dia</p>
-            </p>
-        </article>
-        <article>
-            <time>(09:22:28)</time>
-            <p>
-                <strong id="fromUser">João</strong>
-                <p>para</p>
-                <strong id="toUser">Todos</strong>
-                <p>: Bom dia</p>
-            </p>
-        </article> -->
+       
     </main>
     <footer>
         <input type="text" placeholder="Escreva aqui...">
@@ -66,11 +31,14 @@
     </footer>
     <div class="loginScreen">
         <figure></figure>
-        <article class="hide">
+        <article  class="login">
             <input type="text" placeholder="Digite eu nome">
-            <button>Entrar</button>
+            <button onclick="loginUser()">Entrar</button>
         </article>
-        
+        <article class="loading hide">
+            <figure></figure>
+            <figcation>Entrado...</figcation>
+        </article>
     </div>
     <!-- axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
