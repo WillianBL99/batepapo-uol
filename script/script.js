@@ -1,22 +1,22 @@
-/* 
+
 loginUser(prompt('Seu nome'));
 
 function loginUser(name){
-    const user = {name: "Astrofonildo"};
-    const promise = axios.post('http://mock-api.driven.com.br/api/v4/uol/participants', user);
-    promise.then(userIsApproved);
-} */
+    const obj = {name: name};
+    const promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/participants', obj);
+    promise.then(userIsApproved)
+}
 
-/* function userIsApproved(answer){
-    console.log(answer.data);
-    if(answer == 200) alert('foi aprovado');
+function userIsApproved(answer){
+    console.log(answer.status);
+    if(answer.status == 200) {
+        loadMessage();
+    }
     else {
      alert('não foi aprovado');
      loginUser(prompt('Seu nome'));
     }
-} */
-
-loadMessage();
+}
 
 function loadMessage(){
     const promise = axios.get('https://mock-api.driven.com.br/api/v4/uol/messages');
@@ -61,10 +61,18 @@ function assemblemessage(objMsg){
 
 
 
-/* function sendmessage(){
-    const promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/messages',
+function sendMessage(){
+    const userName = document.querySelector('input').value;
+    const obj = {name: userName};
+    const promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/participants',
+           obj);
+    /* const promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/messages',
     {
         from: 'Joãozinho',
-        to: ''
-    })
-} */
+        to: 'Todos',
+        text: 'Testando aqui...',
+        type: 'message'
+    }) */
+    console.log(promise);
+    promise.then(function(r){console.log(r)});
+}
