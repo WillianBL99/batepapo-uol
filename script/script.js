@@ -1,13 +1,11 @@
 
-//loginUser(prompt('Seu nome'));
-
 let user = {name: ''};
 let connectedInterval = null;
 let loadMessageInterval = null;
 
 function loginUser(){
     user.name = document.querySelector('.login input').value;
-    const promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/participants', user.name);
+    const promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/participants', user);
     loading();
     promise.then(verifyUser)
 }
@@ -28,7 +26,7 @@ function verifyUser(answer){
 
 function keepConnected(){
     const repositorio = 'https://mock-api.driven.com.br/api/v4/uol/status';
-    const promise = axios.post(repositorio, user.name);
+    const promise = axios.post(repositorio, user);
 }
 
 
@@ -52,15 +50,19 @@ function loadMessage(){
 function showMessage(answer){
     const messageList = answer.data;
     const mesageArea = document.querySelector('main');
+    mesageArea.innerHTML = '';
     for(let i = 0; i < messageList.length; i++){
         const objMsg = messageList[i];        
         mesageArea.innerHTML += assemblemessage(objMsg);
     }
+
+    const recentMessage = document.querySelector('main article:last-child');
+    recentMessage.scrollIntoView();
+    
 }
 
 function assemblemessage(objMsg){
     let message = '';
-    console.log(objMsg.type);
     if(objMsg.type === 'message'){
         message = `<article>
                         <time>(${objMsg.time})</time>
