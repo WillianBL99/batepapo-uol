@@ -75,12 +75,24 @@ function assemblemessage(objMsg){
                     </article>`;
     }
 
-    else {
-        message = `<article>
+    else if(objMsg.type === 'status') {
+        message = `<article class="in-out-msg">
                         <time>(${objMsg.time})</time>
                         <p>
                             <strong id="fromUser">${objMsg.from}</strong>
                             <p>${objMsg.text}</p>
+                        </p>
+                    </article>`;
+    }
+
+    else {
+        message = `<article class="reserved-msg>
+                        <time>(${objMsg.time})</time>
+                        <p>
+                            <strong id="fromUser">${objMsg.from}</strong>
+                            <p>para</p>
+                            <strong id="toUser">${objMsg.to}</strong>
+                            <p>: ${objMsg.text}</p>
                         </p>
                     </article>`;
     }
@@ -90,17 +102,16 @@ function assemblemessage(objMsg){
 
 
 function sendMessage(){
-    const userName = document.querySelector('input').value;
-    const obj = {name: userName};
-    const promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/participants',
-           obj);
-    /* const promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/messages',
-    {
-        from: 'Joãozinho',
+    const labelMessage = document.querySelector('footer input');
+    
+    const message = {
+        from: user.name,
         to: 'Todos',
-        text: 'Testando aqui...',
+        text: labelMessage.value,
         type: 'message'
-    }) */
-    console.log(promise);
-    promise.then(function(r){console.log(r)});
+    }
+
+    labelMessage.value = '';
+
+    const promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/messages', message);
 }

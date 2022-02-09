@@ -2,8 +2,9 @@
     box-sizing: border-box;
     --main-color: #fff;
     --reserved-msg: #FFDEDE;
-    --msg: #fff;
-    --type-msg: #dcdcdc;
+    --normal-msg: #fff;
+    --in-out-msg: #dcdcdc;
+
 
     --height-header: 80px;
     --height-footer: 80px;
@@ -71,7 +72,15 @@ main article {
     height: 40px;
     margin-bottom: 4px;
 
-    background-color: var(--msg);
+    background-color: var(--normal-msg);
+}
+
+article.reserved-msg{
+    background-color: var(--reserved-msg);
+}
+
+article.in-out-msg{
+    background-color: var(--in-out-msg);
 }
 
 main article:first-child {
