@@ -1,5 +1,5 @@
 
-loginUser(prompt('Seu nome'));
+//loginUser(prompt('Seu nome'));
 
 function loginUser(name){
     const obj = {name: name};

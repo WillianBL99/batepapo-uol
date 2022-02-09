@@ -8,6 +8,10 @@
     --height-header: 80px;
     --height-footer: 80px;
     --space-word: 4px;
+    --loading-size: 90px;
+
+    --logo-uol: url("../img/logoUol.png");
+    --img-loading: url('../img/loading.gif');
 
 }
 
@@ -33,6 +37,7 @@ header{
     padding: 0 22px;
 
     position: fixed;
+    z-index: 0;
     top: 0;
     left: 0;
     right: 0;
@@ -44,7 +49,7 @@ header{
 header figure {
     width: 75px;
     height: 53px;
-    background-image: url("../img/logoUol.png");
+    background-image: var(--logo-uol);
 }
 header ion-icon {
     font-size: 42px;
@@ -94,6 +99,7 @@ footer {
     padding: 0 17px;
 
     position: fixed;
+    z-index: 0;
     bottom: 0;
     left: 0;
     right: 0;
@@ -115,4 +121,59 @@ footer input::selection {
 
 footer ion-icon {
     font-size: 26px;
+}
+
+.loginScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--main-color);
+}
+
+.loginScreen>figure  {
+    width: 130px;
+    height: 92px;
+    background-image: var(--logo-uol);
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    margin: calc((50vh - 57px - 92px)/2) 0;
+}
+
+.loginScreen input {
+    text-align: center;
+    width: 260px;
+    height: 54px;
+    margin-bottom: 15px;
+
+    border: 1px solid #D7D7D7;
+    border-radius: 4px;
+
+    font-size: 18px;
+    color: #aeaeae;
+}
+
+.loginScreen button {
+    width: 109px;
+    height: 45px;
+    border-radius: 9px;
+
+    font-size: 18px;
+
+    background-color: #e7e7e7;
+    color: #696969;
+}
+
+
+
+
+
+.hide {
+    display: none;
 }
