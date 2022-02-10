@@ -3,24 +3,33 @@ let user = {name: ''};
 let connectedInterval = null;
 let loadMessageInterval = null;
 
+let lastMessage = null;
+
 function loginUser(){
     user.name = document.querySelector('.login input').value;
     const promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/participants', user);
     loading();
-    promise.then(verifyUser)
+    promise.catch(userError);
+    promise.then(verifyUser);
 }
 
 function verifyUser(answer){
-    console.log(answer.status);
+    console.log(answer.status)
     if(answer.status == 200) {
         loadMessage();
         setTimeout(hideLogin, 100);        
         connectedInterval = setInterval(keepConnected, 5000);
         loadMessageInterval = setInterval(loadMessage, 3000);
-    } 
-    else {
-     loading();
     }
+}
+
+
+function userError(answer){
+    const inputLogin = document.querySelector('.login input');
+    inputLogin.setAttribute('placeholder','Usuário já existe');
+    inputLogin.value = '';
+    inputLogin.classList.add('erro');
+    loading();
 }
 
 
@@ -48,17 +57,19 @@ function loadMessage(){
 }
 
 function showMessage(answer){
+    console.log(answer);
     const messageList = answer.data;
     const mesageArea = document.querySelector('main');
-    mesageArea.innerHTML = '';
+    let auxMessageList='';
     for(let i = 0; i < messageList.length; i++){
-        const objMsg = messageList[i];        
-        mesageArea.innerHTML += assemblemessage(objMsg);
+        //console.log('carregando...' + i)
+        const objMsg = messageList[i];   
+        auxMessageList += assemblemessage(objMsg);
     }
-
-    const recentMessage = document.querySelector('main article:last-child');
-    recentMessage.scrollIntoView();
     
+    mesageArea.innerHTML = auxMessageList;
+    const recentMessage = document.querySelector('main article:last-child');
+    recentMessage.scrollIntoView();    
 }
 
 function assemblemessage(objMsg){
@@ -99,8 +110,6 @@ function assemblemessage(objMsg){
     return message;
 }
 
-
-
 function sendMessage(){
     const labelMessage = document.querySelector('footer input');
     
@@ -114,6 +123,12 @@ function sendMessage(){
     labelMessage.value = '';
 
     const promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/messages', message);
+    promise.then(()=>{
+        clearInterval(loadMessageInterval);
+        loadMessage();
+        loadMessageInterval = setInterval(loadMessage, 3000);
+    });
+    promise.catch(()=>{window.location.reload});
 }
 
 

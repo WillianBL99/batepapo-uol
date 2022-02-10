@@ -183,7 +183,17 @@ footer ion-icon {
     border-radius: 4px;
 
     font-size: 18px;
-    color: #aeaeae;
+    color: #000;
+}
+
+.loginScreen input:focus, input:focus, select:focus {
+    outline: 0;
+    caret-color: black;    
+}
+
+
+input.erro {
+    border: 1px solid #ce1818;
 }
 
 .loginScreen button {
