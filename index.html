@@ -40,18 +40,12 @@
             <figcation>Entrado...</figcation>
         </article>
     </div>
-    <div class="sidebar hide" onclick="sidebar(false)">
+    <div class="sidebar hide">
+        <div class="background"  onclick="sidebar(false)"></div>
         <nav>
             <section class="contacts">
                 <header>Escolha um contato para enviar mensagem:</header>
                 <ul>
-                    <li>
-                        <i>
-                            <ion-icon name="people-sharp"></ion-icon>                
-                            <p>Todos</p>
-                        </i>
-                        <ion-icon class="check" name="checkmark-sharp"></ion-icon>    
-                    </li>
                 </ul>
             </section>
             <section>
@@ -69,7 +63,7 @@
                             <ion-icon name="lock-closed"></ion-icon>
                             <p>Reservado</p>
                         </i>
-                        <ion-icon class="check" name="checkmark-sharp"></ion-icon>                
+                        <ion-icon class="check hide" name="checkmark-sharp"></ion-icon>                
                     </li>
                 </ul>
             </section>

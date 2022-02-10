@@ -3,6 +3,14 @@ let user = {name: ''};
 let connectedInterval = null;
 let loadMessageInterval = null;
 
+const LI_TODOS =    `<li>
+                        <i>
+                            <ion-icon name="people-sharp"></ion-icon>                
+                            <p>Todos</p>
+                        </i>
+                        <ion-icon class="check" name="checkmark-sharp"></ion-icon>    
+                    </li>`;
+
 let lastMessage = null;
 
 function loginUser(){
@@ -17,9 +25,11 @@ function verifyUser(answer){
     console.log(answer.status)
     if(answer.status == 200) {
         loadMessage();
+        loadUsers();
         setTimeout(hideLogin, 100);        
         connectedInterval = setInterval(keepConnected, 5000);
         loadMessageInterval = setInterval(loadMessage, 3000);
+        setInterval(loadUsers, 3000);
     }
 }
 
@@ -56,8 +66,30 @@ function loadMessage(){
     promise.then(showMessage);
 }
 
+
+function loadUsers(){
+    const promise = axios.get('https://mock-api.driven.com.br/api/v4/uol/participants');
+    promise.then((userList)=>{
+        const users = userList.data;
+        console.log('carregando....' + users.length)
+        const userArea = document.querySelector('.contacts ul');
+        userArea.innerHTML = LI_TODOS;
+        for(let i = 0; i<users.length; i++){
+            console.log('carregando....' + users[i].name)
+            userArea.innerHTML += 
+                `<li>
+                    <i>
+                        <ion-icon name="people-sharp"></ion-icon>                
+                        <p>${users[i].name}</p>
+                    </i>
+                    <ion-icon class="check hide" name="checkmark-sharp"></ion-icon>    
+                </li>`
+        }
+
+    });
+}
+
 function showMessage(answer){
-    console.log(answer);
     const messageList = answer.data;
     const mesageArea = document.querySelector('main');
     let auxMessageList='';

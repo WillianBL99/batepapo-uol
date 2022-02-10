@@ -232,9 +232,13 @@ input.erro {
     right: 0;
     height: 100vh;
     z-index: 2;
-    background-color: rgba(0, 0, 0, 0.2);
-
     transition: color .1s linear;
+}
+
+.background {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.15);
 }
 
 
@@ -245,6 +249,7 @@ nav {
     height: 100%;
     
     overflow: hidden;
+    overflow-y: scroll;
     padding: 0 18px;
 
     transition:width .15s linear;
@@ -257,7 +262,7 @@ nav {
     width: 292px;
 }
 
-.sidebar-expand {
+.background-expand {    
     background-color: rgba(0, 0, 0, 0.65);
 }
 
@@ -302,6 +307,7 @@ li p {
 }
 
 li .check {
+    visibility: false;
     color: #28BB25;
 }
 
