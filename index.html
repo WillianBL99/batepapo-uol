@@ -40,27 +40,33 @@
             <figcation>Entrado...</figcation>
         </article>
     </div>
-    <div>
+    <div class="sidebar">
         <aside>
-            <section>
+            <section class="contacts">
                 <header>Escolha um contato para enviar mensagem:</header>
                 <button>
-                    <ion-icon></ion-icon>
-                    <p>Todos</p>
-                    <ion-icon name="people-sharp"></ion-icon>                
+                    <div>
+                        <ion-icon name="people-sharp"></ion-icon>                
+                        <p>Todos</p>
+                    </div>
+                    <ion-icon class="check" name="checkmark-sharp"></ion-icon>    
                 </button>
             </section>
             <section>
                 <header>Escolha a visibilidade:</header>
                 <button>
-                    <ion-icon></ion-icon>
-                    <p>Público</p>
-                    <ion-icon></ion-icon>                
+                    <div>
+                        <ion-icon name="lock-open"></ion-icon>
+                        <p>Público</p>
+                    </div>                    
+                    <ion-icon class="check" name="checkmark-sharp"></ion-icon>                
                 </button>
                 <button>
-                    <ion-icon></ion-icon>
-                    <p>Reservado</p>
-                    <ion-icon></ion-icon>                
+                    <div>
+                        <ion-icon name="lock-closed"></ion-icon>
+                        <p>Reservado</p>
+                    </div>
+                    <ion-icon class="check" name="checkmark-sharp"></ion-icon>                
                 </button>
             </section>
         </aside>
