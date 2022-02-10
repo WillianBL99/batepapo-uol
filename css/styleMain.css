@@ -30,7 +30,7 @@ button {
 }
 
 /* -- Topo -- */
-/* header{
+header{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -47,7 +47,7 @@ button {
     background-color: var(--main-color);
     box-shadow: 0px 1px 10px 2px rgba(0, 0, 0, 0.2);
 }
- */
+
 header figure {
     width: 75px;
     height: 53px;
@@ -212,7 +212,7 @@ footer ion-icon {
 }
 
 
-/* -- Tela de carregamento -- */
+/* -- Menu lateral -- */
 .sidebar{
     display: flex;
     justify-content: flex-end;
@@ -222,20 +222,35 @@ footer ion-icon {
     right: 0;
     height: 100vh;
     z-index: 2;
+    background-color: rgba(0, 0, 0, 0.2);
 
-    background-color: rgba(0, 0, 0, 0.65);
+    transition: color .1s linear;
 }
 
-.sidebar aside {
+
+nav {
     display: flex;
     flex-direction: column;
-    width: 259px;
+    width: 1px;
     height: 100%;
-
+    
+    overflow: hidden;
     padding: 0 18px;
+
+    transition:width .15s linear;
     
     background-color: var(--main-color);
 }
+
+
+.nav-expand {
+    width: 292px;
+}
+
+.sidebar-expand {
+    background-color: rgba(0, 0, 0, 0.65);
+}
+
 
 .sidebar header {
     display: flex;
@@ -246,14 +261,15 @@ footer ion-icon {
     position: static;
     
     height: 84px;
-    padding: 0 22px;
+    padding: 0 0;
+    box-shadow: none;
 }
 
 .sidebar section:last-child header{
     height: 66px;
 }
 
-.sidebar button {
+.sidebar li {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -261,21 +277,21 @@ footer ion-icon {
     margin-bottom: 18px;
 }
 
-button div {
+li i {
     display: flex;
     align-items: center;
 }
 
-button ion-icon {
+li ion-icon {
     font-size: 24px;
 }
 
-button p {
+li p {
     font-size: 16px;
     margin-left: 8px;
 }
 
-button .check {
+li .check {
     color: #28BB25;
 }
 

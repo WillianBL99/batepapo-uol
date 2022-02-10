@@ -86,7 +86,7 @@ function assemblemessage(objMsg){
     }
 
     else {
-        message = `<article class="reserved-msg>
+        message = `<article class="reserved-msg">
                         <time>(${objMsg.time})</time>
                         <p>
                             <strong id="fromUser">${objMsg.from}</strong>
@@ -114,4 +114,24 @@ function sendMessage(){
     labelMessage.value = '';
 
     const promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/messages', message);
+}
+
+
+function sidebar(status){
+    const sidebarBG = document.querySelector('.sidebar');
+    const nav = document.querySelector('nav');
+    if(status){
+        sidebarBG.classList.remove('hide');
+        setTimeout(() => {
+            sidebarBG.classList.add('sidebar-expand');
+            nav.classList.add('nav-expand');
+        }, 100);
+
+    } else {
+        sidebarBG.classList.remove('sidebar-expand');
+        nav.classList.remove('nav-expand');
+        setTimeout(() => {
+            sidebarBG.classList.add('hide');
+        }, 100);
+    }
 }

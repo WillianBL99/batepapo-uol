@@ -20,7 +20,7 @@
 <body>
     <header>
         <figure></figure>
-        <button><ion-icon name="people-sharp"></ion-icon></button>
+        <button onclick="sidebar(true)"><ion-icon name="people-sharp"></ion-icon></button>
     </header>
     <main>
        
@@ -40,36 +40,40 @@
             <figcation>Entrado...</figcation>
         </article>
     </div>
-    <div class="sidebar">
-        <aside>
+    <div class="sidebar hide" onclick="sidebar(false)">
+        <nav>
             <section class="contacts">
                 <header>Escolha um contato para enviar mensagem:</header>
-                <button>
-                    <div>
-                        <ion-icon name="people-sharp"></ion-icon>                
-                        <p>Todos</p>
-                    </div>
-                    <ion-icon class="check" name="checkmark-sharp"></ion-icon>    
-                </button>
+                <ul>
+                    <li>
+                        <i>
+                            <ion-icon name="people-sharp"></ion-icon>                
+                            <p>Todos</p>
+                        </i>
+                        <ion-icon class="check" name="checkmark-sharp"></ion-icon>    
+                    </li>
+                </ul>
             </section>
             <section>
                 <header>Escolha a visibilidade:</header>
-                <button>
-                    <div>
-                        <ion-icon name="lock-open"></ion-icon>
-                        <p>Público</p>
-                    </div>                    
-                    <ion-icon class="check" name="checkmark-sharp"></ion-icon>                
-                </button>
-                <button>
-                    <div>
-                        <ion-icon name="lock-closed"></ion-icon>
-                        <p>Reservado</p>
-                    </div>
-                    <ion-icon class="check" name="checkmark-sharp"></ion-icon>                
-                </button>
+                <ul>
+                    <li>
+                        <i>
+                            <ion-icon name="lock-open"></ion-icon>
+                            <p>Público</p>
+                        </i>                    
+                        <ion-icon class="check" name="checkmark-sharp"></ion-icon>                
+                    </li>
+                    <li>
+                        <i>
+                            <ion-icon name="lock-closed"></ion-icon>
+                            <p>Reservado</p>
+                        </i>
+                        <ion-icon class="check" name="checkmark-sharp"></ion-icon>                
+                    </li>
+                </ul>
             </section>
-        </aside>
+        </nav>
     </div>
     <!-- axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
