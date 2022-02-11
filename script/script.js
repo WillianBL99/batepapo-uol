@@ -1,6 +1,6 @@
 const LOGIN = 'login';
 const MAIN = 'main';
-const LI_TODOS =    `<li onclick="selectUserSendMessage(this)">
+const LI_TODOS =    `<li class="all" onclick="selectUserSendMessage(this)">
                         <i>
                             <ion-icon name="people-sharp"></ion-icon>                
                             <p>Todos</p>
@@ -8,11 +8,16 @@ const LI_TODOS =    `<li onclick="selectUserSendMessage(this)">
                         <ion-icon class="check" name="checkmark-sharp"></ion-icon>    
                     </li>`;
 const MESSAGE_INTERVAL = 3000;
+
+
+const BTN_PUBLIC_VISIBILITY = document.querySelector('#message .check');
+const BTN_PRIVATE_VISIBILITY = document.querySelector('#private_message .check');
+
 let user = {name: ''};
 let connectedInterval = null;
 let loadMessageInterval = null;
-let selectedUser = null
-let selectedVisibility = 'message';
+let selectedUsername = null
+let slectedMessageVisibility = 'message';
 let currentScreen = LOGIN;
 
 /* Enter Control */
@@ -46,6 +51,7 @@ function requestFocusUser(){
     const userLogin = document.querySelector('.login input');
     userLogin.focus();
 }
+
 /* Onde a lógica inicia */
 function loginUser(){
     user.name = document.querySelector('.login input').value;
@@ -108,13 +114,16 @@ function loadUsers(){
         const userArea = document.querySelector('.contacts ul');
         userArea.innerHTML = LI_TODOS;
         opcTodos = userArea.querySelector('.check');
-        if(selectedUser === 'Todos') {
+        let find = false;
+
+
+        if(selectedUsername === 'Todos') {
             opcTodos.classList.add('selected');
         }
-        let find = false;
+
         for(let i = 0; i<users.length; i++){
             let toCheck = '';
-            if(users[i].name === selectedUser){
+            if(users[i].name === selectedUsername){
                 toCheck = 'selected';
                 find = true;
             }
@@ -131,7 +140,9 @@ function loadUsers(){
 
         if(!find){
             opcTodos.classList.add('selected');
-            selectedUser = 'Todos';
+            selectedUsername = 'Todos';
+            BTN_PRIVATE_VISIBILITY.classList.remove('selected');
+            BTN_PUBLIC_VISIBILITY.classList.add('selected');
         }
 
     });
@@ -153,40 +164,58 @@ function showMessage(answer){
 }
 
 function assemblemessage(objMsg){
-    let message = '';
-    if(objMsg.type === 'message'){
-        message = `<article>
-                        <span>
-                            <time>(${objMsg.time})</time>
-                            <strong id="fromUser">${objMsg.from}</strong>
-                            <p>para</p>
-                            <strong id="toUser">${objMsg.to}</strong>
-                        </span>                
-                        <p>: ${objMsg.text}</p>
-                    </article>`;
-    }
+    switch(objMsg.type){
+        case 'status':
+            return statusMessage(objMsg.time, objMsg.from, objMsg.text);
 
-    else if(objMsg.type === 'status') {
-        message = `<article class="in-out-msg">
-                        <time>(${objMsg.time})</time>
-                        <p>
-                            <strong id="fromUser">${objMsg.from}</strong>
-                            <p>${objMsg.text}</p>
-                        </p>
-                    </article>`;
-    }
+        case 'message':
+            return normalMessage(objMsg.time, objMsg.from, objMsg.to, objMsg.text); 
 
-    else {
-        message = `<article class="reserved-msg">
-                        <time>(${objMsg.time})</time>
-                        <p>
-                            <strong id="fromUser">${objMsg.from}</strong>
-                            <p>para</p>
-                            <strong id="toUser">${objMsg.to}</strong>
-                            <p>: ${objMsg.text}</p>
-                        </p>
-                    </article>`;
+        case 'private_message':
+            return privateMessage(objMsg.time, objMsg.from, objMsg.to, objMsg.text);
     }
+}
+
+function statusMessage(time, from, text){
+    const message = `
+        <article class="in-out-msg">
+            <span>
+                <time>(${time})</time>
+                <strong id="fromUser">${from}</strong>
+            </span>                
+            <p>: ${text}</p>
+        </article>`;
+    
+    return message;
+}
+
+function normalMessage(time, from, to, text){
+    const message = `
+        <article>
+            <span>
+                <time>(${time})</time>
+                <strong id="fromUser">${from}</strong>
+                <p>para</p>
+                <strong id="toUser">${to}</strong>
+            </span>                
+            <p>: ${text}</p>
+        </article>`;
+    
+    return message;
+}
+
+function privateMessage(time, from, to, text){
+    const message = `
+        <article class="reserved-msg">
+            <span>
+                <time>(${time})</time>
+                <strong id="fromUser">${from}</strong>
+                <p>para</p>
+                <strong id="toUser">${to}</strong>
+            </span>                
+            <p>: ${text}</p>
+        </article>`;
+    
     return message;
 }
 
@@ -195,9 +224,9 @@ function sendMessage(){
     
     const message = {
         from: user.name,
-        to: selectedUser,
+        to: selectedUsername,
         text: labelMessage.value,
-        type: selectedVisibility
+        type: slectedMessageVisibility
     }
 
     labelMessage.value = '';
@@ -233,27 +262,29 @@ function sidebar(status){
 }
 
 
+/* Escolha de destinatário e visibilidade das mensagens */
 
-function selectUserSendMessage(opcUser){
-    let checkIcon = document.querySelector('.contacts li .check.selected');
-    if(!checkIcon){
-        const opcTodos = document.querySelector('.contacts li ion-icon:first-child');
-        opcTodos.classList.add('selected');
+function selectUserSendMessage(contact){
+
+    selectedUsername = contact.querySelector('p').innerHTML;
+    const checkOfContact = contact.querySelector('.check');
+    const checkEnable = document.querySelector('.contacts li .check.selected');
+
+    if(checkEnable){
+        checkEnable.classList.remove('selected');
     }
     else {
-        checkIcon.classList.remove('selected');
+        const allContactsOpc = document.querySelector('.contacts li .all');
+        allContactsOpc.classList.add('selected');
     }
-    checkIcon = opcUser.querySelector('.check');
-    checkIcon.classList.add('selected');
-    selectedUser = opcUser.querySelector('p').innerHTML;
-    console.log(selectedUser);
-    console.log(opcUser);
+
+    checkOfContact.classList.add('selected');
     conflictVerify();
 }
 
 
 function messageVisibility(opc){
-    selectedVisibility = opc.id;
+    slectedMessageVisibility = opc.id;
     const checkIcon = document.querySelector('.visibility li .check.selected');
     checkIcon.classList.remove('selected');
     opc.querySelector('.check').classList.add('selected');
@@ -262,11 +293,9 @@ function messageVisibility(opc){
 
 
 function conflictVerify(){
-    const publicVisibility = document.querySelector('#message .check');
-    const privateVisibility = document.querySelector('#private_message .check');
-    if(selectedUser === 'Todos'){
-        publicVisibility.classList.add('selected');
-        privateVisibility.classList.remove('selected')
-        selectedVisibility = 'message'
+    if(selectedUsername === 'Todos'){
+        BTN_PUBLIC_VISIBILITY.classList.add('selected');
+        BTN_PRIVATE_VISIBILITY.classList.remove('selected')
+        slectedMessageVisibility = 'message'
     }
 }
