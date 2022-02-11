@@ -3,6 +3,7 @@ let user = {name: ''};
 let connectedInterval = null;
 let loadMessageInterval = null;
 let selectedUser = null
+let selectedVisibility = 'message';
 
 const LI_TODOS =    `<li onclick="selectUserSendMessage(this)">
                         <i>
@@ -163,7 +164,7 @@ function sendMessage(){
         from: user.name,
         to: selectedUser,
         text: labelMessage.value,
-        type: 'message'
+        type: selectedVisibility
     }
 
     labelMessage.value = '';
@@ -201,10 +202,9 @@ function sidebar(status){
 
 
 function selectUserSendMessage(opcUser){
-    console.log('clik');
-    let checkIcon = document.querySelector('.sidebar li .check.selected');
+    let checkIcon = document.querySelector('.contacts li .check.selected');
     if(!checkIcon){
-        const opcTodos = document.querySelector('.sidebar li ion-icon:first-child');
+        const opcTodos = document.querySelector('.contacts li ion-icon:first-child');
         opcTodos.classList.add('selected');
     }
     else {
@@ -215,4 +215,25 @@ function selectUserSendMessage(opcUser){
     selectedUser = opcUser.querySelector('p').innerHTML;
     console.log(selectedUser);
     console.log(opcUser);
+    conflictVerify();
+}
+
+
+function messageVisibility(opc){
+    selectedVisibility = opc.id;
+    const checkIcon = document.querySelector('.visibility li .check.selected');
+    checkIcon.classList.remove('selected');
+    opc.querySelector('.check').classList.add('selected');
+    conflictVerify();
+}
+
+
+function conflictVerify(){
+    const publicVisibility = document.querySelector('#message .check');
+    const privateVisibility = document.querySelector('#private_message .check');
+    if(selectedUser === 'Todos'){
+        publicVisibility.classList.add('selected');
+        privateVisibility.classList.remove('selected')
+        selectedVisibility = 'message'
+    }
 }
