@@ -69,11 +69,12 @@ main {
 
 /* -- Mensagem -- */
 main article {
-    display: inline;
+    display: inline;    
     align-items: center;
     min-height: 40px;
 
     padding: 5px 10px;
+    padding-top: 10px;
     margin-bottom: 4px;
 
     background-color: var(--normal-msg);
@@ -97,12 +98,10 @@ main article:last-child {
 
 article>span {
     display: inline-flex;
-    align-items: center;
 }
 
 article>p {
     display: inline;
-    align-items: center;
     line-height: 20px;
     word-wrap: break-word;
 }

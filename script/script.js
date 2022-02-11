@@ -1,13 +1,14 @@
 const LOGIN = 'login';
 const MAIN = 'main';
-const LI_TODOS =    `<li class="all" onclick="selectUserSendMessage(this)">
-                        <i>
-                            <ion-icon name="people-sharp"></ion-icon>                
-                            <p>Todos</p>
-                        </i>
-                        <ion-icon class="check" name="checkmark-sharp"></ion-icon>    
-                    </li>`;
-const MESSAGE_INTERVAL = 3000;
+const OPC_TO_ALL =  `
+    <li class="all" onclick="selectUserSendMessage(this)">
+        <i>
+            <ion-icon name="people-sharp"></ion-icon>                
+            <p>Todos</p>
+        </i>
+        <ion-icon class="check" name="checkmark-sharp"></ion-icon>    
+    </li>`;
+const MESSAGE_INTERVAL = 300000;
 
 
 const BTN_PUBLIC_VISIBILITY = document.querySelector('#message .check');
@@ -27,7 +28,6 @@ window.addEventListener('keydown',listenToClick);
 
 
 function listenToClick(e){
-    console.log(e);
     if(e.key === 'Enter'){
         if(currentScreen === LOGIN) loginUser();
         else sendMessage();
@@ -109,43 +109,45 @@ function loadMessage(){
 
 function loadUsers(){
     const promise = axios.get('https://mock-api.driven.com.br/api/v4/uol/participants');
-    promise.then((userList)=>{
-        const users = userList.data;
-        const userArea = document.querySelector('.contacts ul');
-        userArea.innerHTML = LI_TODOS;
-        opcTodos = userArea.querySelector('.check');
-        let find = false;
+    promise.then(getUsers);
+}
 
 
-        if(selectedUsername === 'Todos') {
-            opcTodos.classList.add('selected');
-        }
+function getUsers(userList){
+    const users = userList.data;
+    const userArea = document.querySelector('.contacts ul');
+    userArea.innerHTML = OPC_TO_ALL; // adiciona opção enviar para todos
 
-        for(let i = 0; i<users.length; i++){
-            let toCheck = '';
-            if(users[i].name === selectedUsername){
-                toCheck = 'selected';
-                find = true;
-            }
-                
-            userArea.innerHTML += 
-                `<li onclick="selectUserSendMessage(this)">
-                    <i>
-                        <ion-icon name="people-sharp"></ion-icon>                
-                        <p>${users[i].name}</p>
-                    </i>
-                    <ion-icon class="check ${toCheck}" name="checkmark-sharp"></ion-icon>    
-                </li>`
-        }
+    let isOnlineYet = false;
 
-        if(!find){
-            opcTodos.classList.add('selected');
-            selectedUsername = 'Todos';
-            BTN_PRIVATE_VISIBILITY.classList.remove('selected');
-            BTN_PUBLIC_VISIBILITY.classList.add('selected');
-        }
+    for(let i = 0; i<users.length; i++){  
+        const isOnline = usernameOptIsOnline(selectedUsername, users[i].name);
+        userArea.innerHTML += usernameOpt(users[i].name, isOnline);
 
-    });
+        if(isOnline) isOnlineYet = true;
+    }
+
+    if(!isOnlineYet){
+        console.log('não encontrou nenhum');
+        selectUserSendMessage(document.querySelector('.all'));
+    }
+}
+
+function usernameOptIsOnline(selectedUser, user){
+    return selectedUser === user;
+}
+
+function usernameOpt(name, checked){
+    const username =`
+        <li onclick="selectUserSendMessage(this)">
+            <i>
+                <ion-icon name="people-sharp"></ion-icon>                
+                <p>${name}</p>
+            </i>
+            <ion-icon class="check ${checked? "selected" : ""}" name="checkmark-sharp"></ion-icon>    
+        </li>`
+
+    return username;
 }
 
 function showMessage(answer){
@@ -153,7 +155,6 @@ function showMessage(answer){
     const mesageArea = document.querySelector('main');
     let auxMessageList='';
     for(let i = 0; i < messageList.length; i++){
-        //console.log('carregando...' + i)
         const objMsg = messageList[i];   
         auxMessageList += assemblemessage(objMsg);
     }
@@ -274,7 +275,7 @@ function selectUserSendMessage(contact){
         checkEnable.classList.remove('selected');
     }
     else {
-        const allContactsOpc = document.querySelector('.contacts li .all');
+        const allContactsOpc = document.querySelector('.contacts li.all');
         allContactsOpc.classList.add('selected');
     }
 
