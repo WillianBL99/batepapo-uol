@@ -1,10 +1,5 @@
-
-let user = {name: ''};
-let connectedInterval = null;
-let loadMessageInterval = null;
-let selectedUser = null
-let selectedVisibility = 'message';
-
+const LOGIN = 'login';
+const MAIN = 'main';
 const LI_TODOS =    `<li onclick="selectUserSendMessage(this)">
                         <i>
                             <ion-icon name="people-sharp"></ion-icon>                
@@ -13,8 +8,45 @@ const LI_TODOS =    `<li onclick="selectUserSendMessage(this)">
                         <ion-icon class="check" name="checkmark-sharp"></ion-icon>    
                     </li>`;
 
-let lastMessage = null;
+let user = {name: ''};
+let connectedInterval = null;
+let loadMessageInterval = null;
+let selectedUser = null
+let selectedVisibility = 'message';
+let currentScreen = LOGIN;
 
+/* Enter Control */
+
+
+window.addEventListener('keydown',listenToClick);
+
+
+function listenToClick(e){
+    console.log(e);
+    if(e.key === 'Enter'){
+        if(currentScreen === LOGIN) loginUser();
+        else sendMessage();
+    }
+
+    else if(currentScreen === MAIN) {
+        requestFocusMessage();
+    }
+
+    else{
+        requestFocusUser();
+    }
+}
+
+function requestFocusMessage(){
+    const textArea = document.querySelector('footer input');
+    textArea.focus();
+}
+
+function requestFocusUser(){
+    const userLogin = document.querySelector('.login input');
+    userLogin.focus();
+}
+/* Onde a lógica inicia */
 function loginUser(){
     user.name = document.querySelector('.login input').value;
     const promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/participants', user);
@@ -31,6 +63,7 @@ function verifyUser(answer){
         connectedInterval = setInterval(keepConnected, 5000);
         loadMessageInterval = setInterval(loadMessage, 3000);
         setInterval(loadUsers, 3000);
+        currentScreen = MAIN;
     }
 }
 
