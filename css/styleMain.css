@@ -16,6 +16,9 @@
 
 }
 
+html {
+    -webkit-text-size-adjust: 100%;
+}
 body {
     font-family: 'Righteous', cursive;
     font-family: 'Roboto', sans-serif;
@@ -66,10 +69,11 @@ main {
 
 /* -- Mensagem -- */
 main article {
-    display: flex;
-    align-items: center;
+    display: inline;
 
-    height: 40px;
+    min-height: 40px;
+
+    padding: 5px 10px;
     margin-bottom: 4px;
 
     background-color: var(--normal-msg);
@@ -91,8 +95,19 @@ main article:last-child {
     margin-bottom: 90px;
 }
 
-article time {
-    margin-left: 8px;
+/* article>p {
+    display: inline;
+    background-color: blue;
+} */
+
+article>span {
+    display: inline-flex;
+}
+
+article>p {
+    display: inline;
+    line-height: 20px;
+    word-wrap: break-word;
 }
 
 article strong {

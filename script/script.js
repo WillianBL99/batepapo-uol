@@ -7,7 +7,7 @@ const LI_TODOS =    `<li onclick="selectUserSendMessage(this)">
                         </i>
                         <ion-icon class="check" name="checkmark-sharp"></ion-icon>    
                     </li>`;
-
+const MESSAGE_INTERVAL = 3000;
 let user = {name: ''};
 let connectedInterval = null;
 let loadMessageInterval = null;
@@ -61,7 +61,7 @@ function verifyUser(answer){
         loadUsers();
         setTimeout(hideLogin, 100);        
         connectedInterval = setInterval(keepConnected, 5000);
-        loadMessageInterval = setInterval(loadMessage, 3000);
+        loadMessageInterval = setInterval(loadMessage, MESSAGE_INTERVAL);
         setInterval(loadUsers, 3000);
         currentScreen = MAIN;
     }
@@ -156,13 +156,13 @@ function assemblemessage(objMsg){
     let message = '';
     if(objMsg.type === 'message'){
         message = `<article>
-                        <time>(${objMsg.time})</time>
-                        <p>
+                        <span>
+                            <time>(${objMsg.time})</time>
                             <strong id="fromUser">${objMsg.from}</strong>
                             <p>para</p>
                             <strong id="toUser">${objMsg.to}</strong>
-                            <p>: ${objMsg.text}</p>
-                        </p>
+                        </span>                
+                        <p>: ${objMsg.text}</p>
                     </article>`;
     }
 
@@ -206,7 +206,7 @@ function sendMessage(){
     promise.then(()=>{
         clearInterval(loadMessageInterval);
         loadMessage();
-        loadMessageInterval = setInterval(loadMessage, 3000);
+        loadMessageInterval = setInterval(loadMessage, MESSAGE_INTERVAL);
     });
     promise.catch(()=>{window.location.reload});
 }
