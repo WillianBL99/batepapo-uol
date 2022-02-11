@@ -307,8 +307,12 @@ li p {
 }
 
 li .check {
-    visibility: false;
+    display: none;
     color: #28BB25;
+}
+
+ion-icon.selected {
+    display: block;
 }
 
 .hide {

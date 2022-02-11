@@ -2,8 +2,9 @@
 let user = {name: ''};
 let connectedInterval = null;
 let loadMessageInterval = null;
+let selectedUser = null
 
-const LI_TODOS =    `<li>
+const LI_TODOS =    `<li onclick="selectUserSendMessage(this)">
                         <i>
                             <ion-icon name="people-sharp"></ion-icon>                
                             <p>Todos</p>
@@ -22,7 +23,6 @@ function loginUser(){
 }
 
 function verifyUser(answer){
-    console.log(answer.status)
     if(answer.status == 200) {
         loadMessage();
         loadUsers();
@@ -71,19 +71,33 @@ function loadUsers(){
     const promise = axios.get('https://mock-api.driven.com.br/api/v4/uol/participants');
     promise.then((userList)=>{
         const users = userList.data;
-        console.log('carregando....' + users.length)
         const userArea = document.querySelector('.contacts ul');
         userArea.innerHTML = LI_TODOS;
+        opcTodos = userArea.querySelector('.check');
+        if(selectedUser === 'Todos') {
+            opcTodos.classList.add('selected');
+        }
+        let find = false;
         for(let i = 0; i<users.length; i++){
-            console.log('carregando....' + users[i].name)
+            let toCheck = '';
+            if(users[i].name === selectedUser){
+                toCheck = 'selected';
+                find = true;
+            }
+                
             userArea.innerHTML += 
-                `<li>
+                `<li onclick="selectUserSendMessage(this)">
                     <i>
                         <ion-icon name="people-sharp"></ion-icon>                
                         <p>${users[i].name}</p>
                     </i>
-                    <ion-icon class="check hide" name="checkmark-sharp"></ion-icon>    
+                    <ion-icon class="check ${toCheck}" name="checkmark-sharp"></ion-icon>    
                 </li>`
+        }
+
+        if(!find){
+            opcTodos.classList.add('selected');
+            selectedUser = 'Todos';
         }
 
     });
@@ -147,7 +161,7 @@ function sendMessage(){
     
     const message = {
         from: user.name,
-        to: 'Todos',
+        to: selectedUser,
         text: labelMessage.value,
         type: 'message'
     }
@@ -166,19 +180,39 @@ function sendMessage(){
 
 function sidebar(status){
     const sidebarBG = document.querySelector('.sidebar');
+    const background = document.querySelector('.sidebar .background');
     const nav = document.querySelector('nav');
     if(status){
         sidebarBG.classList.remove('hide');
         setTimeout(() => {
-            sidebarBG.classList.add('sidebar-expand');
+            background.classList.add('background-expand');
             nav.classList.add('nav-expand');
         }, 100);
 
     } else {
-        sidebarBG.classList.remove('sidebar-expand');
+        background.classList.remove('background-expand');
         nav.classList.remove('nav-expand');
         setTimeout(() => {
             sidebarBG.classList.add('hide');
         }, 100);
     }
+}
+
+
+
+function selectUserSendMessage(opcUser){
+    console.log('clik');
+    let checkIcon = document.querySelector('.sidebar li .check.selected');
+    if(!checkIcon){
+        const opcTodos = document.querySelector('.sidebar li ion-icon:first-child');
+        opcTodos.classList.add('selected');
+    }
+    else {
+        checkIcon.classList.remove('selected');
+    }
+    checkIcon = opcUser.querySelector('.check');
+    checkIcon.classList.add('selected');
+    selectedUser = opcUser.querySelector('p').innerHTML;
+    console.log(selectedUser);
+    console.log(opcUser);
 }
