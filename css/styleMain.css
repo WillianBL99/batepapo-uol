@@ -299,7 +299,7 @@ nav {
 }
 
 .contacts ul {
-    height: 65vh;
+    height: calc(100vh - (84px + 235px));
     overflow-y: auto;
     overflow-x: hidden;
 }

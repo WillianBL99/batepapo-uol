@@ -8,7 +8,7 @@ const OPC_TO_ALL =  `
         </i>
         <ion-icon class="check" name="checkmark-sharp"></ion-icon>    
     </li>`;
-const MESSAGE_INTERVAL = 300000;
+const MESSAGE_INTERVAL = 3000;
 
 
 const BTN_PUBLIC_VISIBILITY = document.querySelector('#message .check');
@@ -138,7 +138,7 @@ function usernameOptIsOnline(selectedUser, user){
 }
 
 function usernameOpt(name, checked){
-    const username =`
+    let username =`
         <li onclick="selectUserSendMessage(this)">
             <i>
                 <ion-icon name="people-sharp"></ion-icon>                
@@ -146,6 +146,8 @@ function usernameOpt(name, checked){
             </i>
             <ion-icon class="check ${checked? "selected" : ""}" name="checkmark-sharp"></ion-icon>    
         </li>`
+
+        if(name === user.name) username = '';
 
     return username;
 }
