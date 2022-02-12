@@ -32,6 +32,10 @@ button {
     border: none;
 }
 
+li {
+    cursor: pointer;
+}
+
 /* -- Topo -- */
 header{
     display: flex;
@@ -260,7 +264,6 @@ nav {
     height: 100%;
     
     overflow: hidden;
-    overflow-y: scroll;
     padding: 0 18px;
 
     transition:width .15s linear;
@@ -291,6 +294,10 @@ nav {
     box-shadow: none;
 }
 
+.contacts ul {
+    height: 65vh;
+    overflow-y: auto;
+}
 .sidebar section:last-child header{
     height: 66px;
 }
