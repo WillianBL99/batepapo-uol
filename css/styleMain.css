@@ -16,14 +16,18 @@
 
 }
 
-html {
-    -webkit-text-size-adjust: 100%;
+html {/* 
+    -webkit-text-size-adjust: 100%; */
+    width: 100vw;
+    height: 100vh;
+    position: relative;
 }
 body {
+    min-width: 270px;
     font-family: 'Righteous', cursive;
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
-    
+    position: static;
     background-color: #e5e5e5;
 }
 
@@ -162,6 +166,7 @@ footer {
 }
 
 footer input {
+    width: 90%;
     border: none;
     font-style: italic;
     font-size: 18px;
