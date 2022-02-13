@@ -64,6 +64,7 @@ function loginUser(){
 
 function verifyUser(answer){
     if(answer.status == 200) {
+        setUserProfile();
         loadMessage();
         loadUsers();
         setTimeout(hideLogin, 100);        
@@ -72,6 +73,10 @@ function verifyUser(answer){
         setInterval(loadUsers, 3000);
         currentScreen = MAIN;
     }
+}
+
+function setUserProfile(){
+    document.querySelector('.username').innerHTML = username;
 }
 
 

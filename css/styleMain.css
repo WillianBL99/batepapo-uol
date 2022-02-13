@@ -32,14 +32,6 @@ button {
     border: none;
 }
 
-li {
-    cursor: pointer;
-}
-
-li:hover{
-    box-shadow: 0 0 7px -3px rgba(0, 0, 0, 0.25);
-}
-
 /* -- Topo -- */
 header{
     display: flex;
@@ -64,8 +56,30 @@ header figure {
     height: 53px;
     background-image: var(--logo-uol);
 }
+
+header section {
+    display: flex;
+    align-items: center;    
+}
+
+header section img {
+    width: 30px;
+    margin: 6px;
+}
+
+header .username {
+    font-size: 20px;
+    font-weight: 700;
+    margin-right: 30px;
+}
+
 header ion-icon {
     font-size: 42px;
+}
+
+header ion-icon:hover{
+    cursor: pointer;
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.20));
 }
 
 /* -- Principal -- */
@@ -158,6 +172,11 @@ footer input::selection {
 
 footer ion-icon {
     font-size: 26px;
+}
+
+footer ion-icon:hover {
+    cursor: pointer;
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.20));
 }
 
 
@@ -269,7 +288,7 @@ nav {
     
     overflow: hidden;
     padding: 0 18px;
-
+    
     transition:width .15s linear;
     
     background-color: var(--main-color);
@@ -284,6 +303,9 @@ nav {
     background-color: rgba(0, 0, 0, 0.65);
 }
 
+.sidebar section:last-child header{
+    height: 66px;
+}
 
 .sidebar header {
     display: flex;
@@ -302,9 +324,6 @@ nav {
     height: calc(100vh - (84px + 235px));
     overflow-y: auto;
     overflow-x: hidden;
-}
-.sidebar section:last-child header{
-    height: 66px;
 }
 
 .sidebar li {
@@ -332,6 +351,11 @@ li p {
 li .check {
     display: none;
     color: #28BB25;
+}
+
+li:hover{
+    cursor: pointer;
+    box-shadow: 0 0 7px -3px rgba(0, 0, 0, 0.25);
 }
 
 ion-icon.selected {
