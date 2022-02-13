@@ -177,7 +177,9 @@ function assemblemessage(objMsg){
             return normalMessage(objMsg.time, objMsg.from, objMsg.to, objMsg.text); 
 
         case 'private_message':
-            return privateMessage(objMsg.time, objMsg.from, objMsg.to, objMsg.text);
+            if(objMsg.from === username || objMsg.to === username){
+                return privateMessage(objMsg.time, objMsg.from, objMsg.to, objMsg.text);
+            }
     }
 }
 
