@@ -62,15 +62,12 @@ header section {
     align-items: center;    
 }
 
-header section img {
-    width: 30px;
-    margin: 6px;
-}
 
 header .username {
     font-size: 20px;
     font-weight: 700;
     margin-right: 30px;
+    color: #696969;
 }
 
 header ion-icon {
@@ -82,6 +79,11 @@ header ion-icon:hover{
     filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.20));
 }
 
+header section ion-icon.icon_user {
+    font-size: 30px;
+    margin: 6px;
+    color: #696969;
+}
 /* -- Principal -- */
 main {
     display: flex;
