@@ -14,7 +14,7 @@ const MESSAGE_INTERVAL = 3000;
 const BTN_PUBLIC_VISIBILITY = document.querySelector('#message .check');
 const BTN_PRIVATE_VISIBILITY = document.querySelector('#private_message .check');
 
-let user = {name: ''};
+let username;
 let connectedInterval = null;
 let loadMessageInterval = null;
 let selectedUsername = null
@@ -54,8 +54,9 @@ function requestFocusUser(){
 
 /* Onde a lógica inicia */
 function loginUser(){
-    user.name = document.querySelector('.login input').value;
-    const promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/participants', user);
+    username = document.querySelector('.login input').value;
+    const objUsername = {name: username};
+    const promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/participants', objUsername);
     loading();
     promise.catch(userError);
     promise.then(verifyUser);
@@ -74,7 +75,7 @@ function verifyUser(answer){
 }
 
 
-function userError(answer){
+function userError(){
     const inputLogin = document.querySelector('.login input');
     inputLogin.setAttribute('placeholder','Usuário já existe');
     inputLogin.value = '';
@@ -85,7 +86,7 @@ function userError(answer){
 
 function keepConnected(){
     const repositorio = 'https://mock-api.driven.com.br/api/v4/uol/status';
-    const promise = axios.post(repositorio, user);
+    const promise = axios.post(repositorio, {name: username});
 }
 
 
@@ -120,17 +121,17 @@ function getUsers(userList){
 
     let isOnlineYet = false;
 
-    for(let i = 0; i<users.length; i++){  
-        const isOnline = usernameOptIsOnline(selectedUsername, users[i].name);
-        userArea.innerHTML += usernameOpt(users[i].name, isOnline);
+    users.forEach(userContact => {
+        const isOnline = usernameOptIsOnline(selectedUsername, userContact.name);
+        userArea.innerHTML += usernameOpt(userContact.name, isOnline);
 
         if(isOnline) isOnlineYet = true;
-    }
+    });
 
     if(!isOnlineYet){
-        console.log('não encontrou nenhum');
         selectUserSendMessage(document.querySelector('.all'));
-    }
+    }   
+    
 }
 
 function usernameOptIsOnline(selectedUser, user){
@@ -138,7 +139,7 @@ function usernameOptIsOnline(selectedUser, user){
 }
 
 function usernameOpt(name, checked){
-    let username =`
+    let userContact =`
         <li onclick="selectUserSendMessage(this)">
             <i>
                 <ion-icon name="people-sharp"></ion-icon>                
@@ -147,23 +148,24 @@ function usernameOpt(name, checked){
             <ion-icon class="check ${checked? "selected" : ""}" name="checkmark-sharp"></ion-icon>    
         </li>`
 
-        if(name === user.name) username = '';
+        if(name === username) userContact = '';
 
-    return username;
+    return userContact;
 }
 
 function showMessage(answer){
     const messageList = answer.data;
-    const mesageArea = document.querySelector('main');
-    let auxMessageList='';
-    for(let i = 0; i < messageList.length; i++){
-        const objMsg = messageList[i];   
-        auxMessageList += assemblemessage(objMsg);
-    }
-    
-    mesageArea.innerHTML = auxMessageList;
+    document.querySelector('main').innerHTML = '';
+
+    messageList.forEach(addMessage);
+
     const recentMessage = document.querySelector('main article:last-child');
     recentMessage.scrollIntoView();    
+}
+
+function addMessage(objMessage){
+    const mesageArea = document.querySelector('main');
+    mesageArea.innerHTML += assemblemessage(objMessage);
 }
 
 function assemblemessage(objMsg){
@@ -224,23 +226,26 @@ function privateMessage(time, from, to, text){
 
 function sendMessage(){
     const labelMessage = document.querySelector('footer input');
+
+    if(labelMessage.value){
+        const message = {
+            from: username,
+            to: selectedUsername,
+            text: labelMessage.value,
+            type: slectedMessageVisibility
+        }
     
-    const message = {
-        from: user.name,
-        to: selectedUsername,
-        text: labelMessage.value,
-        type: slectedMessageVisibility
+        labelMessage.value = '';
+    
+        const promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/messages', message);
+        promise.then(()=>{
+            clearInterval(loadMessageInterval);
+            loadMessage();
+            loadMessageInterval = setInterval(loadMessage, MESSAGE_INTERVAL);
+        });
+        promise.catch(()=>{window.location.reload});
     }
-
-    labelMessage.value = '';
-
-    const promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/messages', message);
-    promise.then(()=>{
-        clearInterval(loadMessageInterval);
-        loadMessage();
-        loadMessageInterval = setInterval(loadMessage, MESSAGE_INTERVAL);
-    });
-    promise.catch(()=>{window.location.reload});
+    
 }
 
 
