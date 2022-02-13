@@ -1,7 +1,7 @@
 const LOGIN = 'login';
 const MAIN = 'main';
 const OPC_TO_ALL =  `
-    <li class="all" onclick="selectUserSendMessage(this)">
+    <li class="all" onclick="selectUserSendMessage(this)" data-identifier="participant">
         <i>
             <ion-icon name="people-sharp"></ion-icon>                
             <p>Todos</p>
@@ -140,7 +140,7 @@ function usernameOptIsOnline(selectedUser, user){
 
 function usernameOpt(name, checked){
     let userContact =`
-        <li onclick="selectUserSendMessage(this)">
+        <li onclick="selectUserSendMessage(this)" data-identifier="participant">
             <i>
                 <ion-icon name="people-sharp"></ion-icon>                
                 <p>${name}</p>
@@ -185,7 +185,7 @@ function assemblemessage(objMsg){
 
 function statusMessage(time, from, text){
     const message = `
-        <article class="in-out-msg">
+        <article class="in-out-msg"  data-identifier="message">
             <span>
                 <time>(${time})</time>
                 <strong id="fromUser">${from}</strong>
@@ -198,7 +198,7 @@ function statusMessage(time, from, text){
 
 function normalMessage(time, from, to, text){
     const message = `
-        <article>
+        <article  data-identifier="message">
             <span>
                 <time>(${time})</time>
                 <strong id="fromUser">${from}</strong>
@@ -213,7 +213,7 @@ function normalMessage(time, from, to, text){
 
 function privateMessage(time, from, to, text){
     const message = `
-        <article class="reserved-msg">
+        <article class="reserved-msg"  data-identifier="message">
             <span>
                 <time>(${time})</time>
                 <strong id="fromUser">${from}</strong>

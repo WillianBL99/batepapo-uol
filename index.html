@@ -41,18 +41,17 @@
         <figure></figure>
         <button onclick="sidebar(true)"><ion-icon name="people-sharp"></ion-icon></button>
     </header>
-    <main>
-       
+    <main>       
     </main>
     <footer>
         <input type="text" placeholder="Escreva aqui...">
-        <button onclick="sendMessage()"><ion-icon name="paper-plane-outline"></ion-icon></button>
+        <button onclick="sendMessage()" data-identifier="send-message"><ion-icon name="paper-plane-outline"></ion-icon></button>
     </footer>
     <div class="loginScreen">
         <figure></figure>
         <article  class="login">
-            <input type="text" placeholder="Digite eu nome">
-            <button onclick="loginUser()">Entrar</button>
+            <input type="text" placeholder="Digite eu nome" data-identifier="enter-name">
+            <button onclick="loginUser()" data-identifier="start">Entrar</button>
         </article>
         <article class="loading hide">
             <figure></figure>
@@ -70,14 +69,14 @@
             <section class="visibility">
                 <header>Escolha a visibilidade:</header>
                 <ul>
-                    <li id="message" onclick="messageVisibility(this)">
+                    <li id="message" onclick="messageVisibility(this)" identifier="visibility">
                         <i>
                             <ion-icon name="lock-open"></ion-icon>
                             <p>Público</p>
                         </i>                    
                         <ion-icon class="check selected" name="checkmark-sharp"></ion-icon>                
                     </li>
-                    <li id="private_message" onclick="messageVisibility(this)">
+                    <li id="private_message" onclick="messageVisibility(this)" identifier="visibility">
                         <i>
                             <ion-icon name="lock-closed"></ion-icon>
                             <p>Reservado</p>
