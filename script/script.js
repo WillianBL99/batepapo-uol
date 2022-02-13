@@ -147,7 +147,7 @@ function usernameOpt(name, checked){
     let userContact =`
         <li onclick="selectUserSendMessage(this)" data-identifier="participant">
             <i>
-                <ion-icon name="people-sharp"></ion-icon>                
+            <ion-icon name="person-circle-sharp"></ion-icon>                
                 <p>${name}</p>
             </i>
             <ion-icon class="check ${checked? "selected" : ""}" name="checkmark-sharp"></ion-icon>    
