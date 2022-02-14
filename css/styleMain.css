@@ -16,12 +16,7 @@
 
 }
 
-html {/* 
-    -webkit-text-size-adjust: 100%; */
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-}
+/* -webkit-text-size-adjust: 100%;*/
 body {
     min-width: 270px;
     font-family: 'Righteous', cursive;

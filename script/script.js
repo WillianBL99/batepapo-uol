@@ -159,17 +159,15 @@ function usernameOpt(name, checked){
 
 function showMessage(answer){
     const messageList = answer.data;
-    document.querySelector('main').innerHTML = '';
+    const messageArea = document.querySelector('main');
+    messageArea.innerHTML = '';
 
-    messageList.forEach(addMessage);
+    messageList.forEach((objMessage)=>{
+        messageArea.innerHTML += assemblemessage(objMessage);
+    });
 
     const recentMessage = document.querySelector('main article:last-child');
     recentMessage.scrollIntoView();    
-}
-
-function addMessage(objMessage){
-    const mesageArea = document.querySelector('main');
-    mesageArea.innerHTML += assemblemessage(objMessage);
 }
 
 function assemblemessage(objMsg){
@@ -183,11 +181,13 @@ function assemblemessage(objMsg){
         case 'private_message':
             const from = objMsg.from === username;  
             // Corrige bug quando recebe uma mensagem privada para todos    
-            const to = objMsg.to === username || objMsg.to !== 'Todos';
+            const to = objMsg.to === username && objMsg.to !== 'Todos';
 
             if(from || to){
+                console.log('entrou ' + objMsg.from + ' ' +objMsg.to);
                 return privateMessage(objMsg.time, objMsg.from, objMsg.to, objMsg.text);
             }
+            else return '';
     }
 }
 
@@ -246,7 +246,7 @@ function sendMessage(){
         }
     
         labelMessage.value = '';
-    
+        
         const promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/messages', message);
         promise.then(()=>{
             clearInterval(loadMessageInterval);
