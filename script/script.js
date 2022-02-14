@@ -171,12 +171,13 @@ function showMessage(answer){
 }
 
 function assemblemessage(objMsg){
+    const clock = clockModify(objMsg.time);
     switch(objMsg.type){
         case 'status':
-            return statusMessage(objMsg.time, objMsg.from, objMsg.text);
+            return statusMessage(clock, objMsg.from, objMsg.text);
 
         case 'message':
-            return normalMessage(objMsg.time, objMsg.from, objMsg.to, objMsg.text); 
+            return normalMessage(clock, objMsg.from, objMsg.to, objMsg.text); 
 
         case 'private_message':
             const from = objMsg.from === username;  
@@ -185,10 +186,26 @@ function assemblemessage(objMsg){
 
             if(from || to){
                 console.log('entrou ' + objMsg.from + ' ' +objMsg.to);
-                return privateMessage(objMsg.time, objMsg.from, objMsg.to, objMsg.text);
+                return privateMessage(clock, objMsg.from, objMsg.to, objMsg.text);
             }
             else return '';
     }
+}
+
+function clockModify(time){
+    let HourMinSec = time.replace('(', '').replace(')','');
+    HourMinSec = HourMinSec.split(':');
+    let hours = parseInt(HourMinSec[0]);
+
+    if(hours < 3){
+        const aux = 3 - hours;
+        hours = 24 - aux;
+    }
+    else {
+        hours -= 3;
+    }
+    HourMinSec[0] = `${hours}`;
+    return `${HourMinSec[0]}:${HourMinSec[1]}:${HourMinSec[2]}`;
 }
 
 function statusMessage(time, from, text){
