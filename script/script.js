@@ -265,11 +265,7 @@ function sendMessage(){
         labelMessage.value = '';
         
         const promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/messages', message);
-        promise.then(()=>{
-            clearInterval(loadMessageInterval);
-            loadMessage();
-            loadMessageInterval = setInterval(loadMessage, MESSAGE_INTERVAL);
-        });
+        promise.then(loadMessage);
         promise.catch(()=>{window.location.reload});
     }
     
