@@ -70,7 +70,7 @@ function verifyUser(answer){
         setTimeout(hideLogin, 100);        
         connectedInterval = setInterval(keepConnected, 5000);
         loadMessageInterval = setInterval(loadMessage, MESSAGE_INTERVAL);
-        setInterval(loadUsers, 3000);
+        setInterval(loadUsers, 10000);
         currentScreen = MAIN;
     }
 }
