@@ -28,17 +28,16 @@ window.addEventListener('keydown',listenToClick);
 
 
 function listenToClick(e){
-    if(e.key === 'Enter'){
-        if(currentScreen === LOGIN) loginUser();
-        else sendMessage();
-    }
-
-    else if(currentScreen === MAIN) {
-        requestFocusMessage();
-    }
-
-    else{
-        requestFocusUser();
+    switch(currentScreen){
+        case LOGIN:
+            if(e.key === 'Enter') loginUser();
+            else requestFocusUser();
+            break;
+            
+        case MAIN:
+            if(e.key === 'Enter') sendMessage();
+            else requestFocusMessage();
+            break;
     }
 }
 
@@ -182,7 +181,11 @@ function assemblemessage(objMsg){
             return normalMessage(objMsg.time, objMsg.from, objMsg.to, objMsg.text); 
 
         case 'private_message':
-            if(objMsg.from === username || objMsg.to === username){
+            const from = objMsg.from === username;  
+            // Corrige bug quando recebe uma mensagem privada para todos    
+            const to = objMsg.to === username || objMsg.to !== 'Todos';
+
+            if(from || to){
                 return privateMessage(objMsg.time, objMsg.from, objMsg.to, objMsg.text);
             }
     }
