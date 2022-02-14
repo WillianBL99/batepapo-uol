@@ -15,8 +15,7 @@
     --img-loading: url('../img/loading.gif');
 
 }
-
-/* -webkit-text-size-adjust: 100%;*/
+ 
 body {
     min-width: 270px;
     font-family: 'Righteous', cursive;
@@ -116,7 +115,7 @@ main article:first-child {
 }
 
 main article:last-child {
-    margin-bottom: 90px;
+    margin-bottom: 120px;
 }
 
 article>span {

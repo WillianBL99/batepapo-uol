@@ -185,7 +185,6 @@ function assemblemessage(objMsg){
             const to = objMsg.to === username && objMsg.to !== 'Todos';
 
             if(from || to){
-                console.log('entrou ' + objMsg.from + ' ' +objMsg.to);
                 return privateMessage(clock, objMsg.from, objMsg.to, objMsg.text);
             }
             else return '';
